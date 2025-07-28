@@ -8,15 +8,27 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f5f3eb; /* 淺米色背景 */
+            background-color: #F4EFEC; /* 淺米色背景 */
+			<!--		    
+			background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23f7eee4" fill-opacity="1" d="M0,0L80,42.7C160,85,320,171,480,186.7C640,203,800,149,960,154.7C1120,160,1280,224,1360,256L1440,288L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path></svg>');
+			-->
+		    background-repeat: no-repeat;
+		    background-size: cover;
         }
+		ul {
+		  list-style-type: none; /* Remove default bullet points */
+		  padding: 0;
+		}
+		.title-text {
+			color: #706d6a; /* 深咖啡文字 */
+		}
         .note {
-            background-color: #fff9c4; /* 淺黃色背景 */
+            background-color: #EFD9C4; /* 淺黃色背景 */
             padding: 8px;
             border-radius: 4px;
             margin-top: 8px;
-            color: #3e2723; /* 深棕色文字 */
-            font-weight: bold;
+            color: #766857; /* 深咖啡文字 */
+            font-weight: 500;
         }
         .tab-button {
             background-color: #d7ccc8; /* 大地色系 */
@@ -65,6 +77,56 @@
             font-weight: bold;
             color: #212121;
         }
+		.card {
+            width: calc(25% - 1rem);
+            margin: 0.5rem;
+			color: #ffffff;
+        }
+        @media (max-width: 768px) {
+            .card {
+                width: calc(50% - 1rem);
+            }
+        }
+		input[type="checkbox"] {
+		  margin-right: 10px;
+		}
+		#unchecked-items, #checked-items {
+		  border: 1px solid #d2a679;
+		  border-radius: 5px;
+		  padding: 10px;
+		  margin-top: 10px;
+		  background-color: #fdf9f3;
+		}
+		#unchecked-items h3, #checked-items h3 {
+		  color: #8B5A2B;
+		}
+		.add-item {
+		  margin-top: 20px;
+		  display: flex;
+		  align-items: center;
+		  gap: 10px;
+		}
+		.add-item input[type="text"] {
+		  padding: 5px;
+		  border: 1px solid #d2a679;
+		  border-radius: 5px;
+		  flex-grow: 1;
+		}
+		.add-item button {
+		  padding: 5px 10px;
+		  background-color: #d2a679;
+		  border: none;
+		  border-radius: 5px;
+		  color: white;
+		  cursor: pointer;
+		}
+		.add-item button:hover {
+		  background-color: #8B5A2B;
+		}
+		.checklist-item {
+		  display: flex;
+		  align-items: center;
+		}
     </style>
     <script>
         function switchTab(tabId) {
@@ -80,13 +142,52 @@
         document.addEventListener("DOMContentLoaded", function() {
             switchTab("day1");
         });
+		
+		function toggleCheck(itemId) {
+		  const item = document.getElementById(itemId);
+		  const checkbox = item.querySelector("input[type='checkbox']");
+		  const uncheckedList = document.getElementById("unchecked-items");
+		  const checkedList = document.getElementById("checked-items");
+
+		  // Move item between unchecked and checked lists based on the checkbox state
+		  if (checkbox.checked) {
+			checkedList.appendChild(item); // Move to "checked items" section
+		  } else {
+			uncheckedList.appendChild(item); // Move back to "unchecked items" section
+		  }
+		}
+
+		function addItem() {
+		  const newItemInput = document.getElementById("new-item-input");
+		  const newItemText = newItemInput.value.trim();
+
+		  if (newItemText === "") {
+			alert("請輸入物品名稱！");
+			return;
+		  }
+
+		  const newItemId = "item" + Date.now(); // Generate unique ID for new item
+		  const uncheckedList = document.getElementById("unchecked-items");
+
+		  // Create new list item
+		  const listItem = document.createElement("li");
+		  listItem.id = newItemId;
+		  listItem.innerHTML = `<input type="checkbox" onchange="toggleCheck('${newItemId}')"> ${newItemText}`;
+		  listItem.className = "checklist-item";
+
+		  // Add new item to the unchecked list
+		  uncheckedList.appendChild(listItem);
+
+		  // Clear the input field
+		  newItemInput.value = "";
+		}
     </script>
 </head>
 <body class="p-4">
 
     <header class="text-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-700">📅 台北三天兩夜親子旅行</h1>
-        <p class="text-lg text-gray-600">旅遊日期：8/8 ~ 8/10 | 人員：爸爸、媽媽、1歲寶寶</p>
+        <h1 class="text-3xl font-bold title-text">📅 台北三天兩夜親子旅行</h1>
+        <p class="text-lg text-gray-600">旅遊日期：8/9(六) ~ 8/11(一) | 人員：爸爸、媽媽、1歲寶寶</p>
     </header>
 
     <nav class="text-center mb-6">
@@ -97,44 +198,48 @@
         <button class="tab-button" onclick="switchTab('tickets')">門票資訊</button>
         <button class="tab-button" onclick="switchTab('transportation')">交通資訊</button>
         <button class="tab-button" onclick="switchTab('accommodation')">住宿資訊</button>
+		<button class="tab-button" onclick="switchTab('checklist')">攜帶物品清單</button>
     </nav>
 
     <!-- 第一天天行程 -->
     <div id="day1" class="content active">
-        <h2 class="text-2xl font-bold text-gray-700 mb-4">第一天行程 - 8/8 (週五)</h2>
+         <h2 class="text-2xl font-bold title-text mb-4">第一天行程 - 8/9 (週六)</h2>
         <div class="timeline">
             <div class="timeline-item">
-                <p class="timeline-time">07:00 - 09:00</p>
-                <p>搭乘高鐵從高雄至台北，抵達後前往酒店辦理入住。</p>
+                <p class="timeline-time">08:55 - 10:40</p>
+                <p>搭乘高鐵左營至南港。</p>
             </div>
             <div class="timeline-item">
-                <p class="timeline-time">10:00 - 12:30</p>
-                <p>前往南港展覽館參加文博展，適合親子遊覽，展館寬敞可推嬰兒車。</p>
-                <div class="note">備註：攜帶嬰兒常用物品，如奶瓶和尿布。</div>
+                <p class="timeline-time">11:00 - 11:30</p>
+                <p>抵達酒店稍作休息，整理與寄放行李後出發。</p>
             </div>
             <div class="timeline-item">
-                <p class="timeline-time">12:30 - 13:30</p>
-                <p>於展館內或附近餐廳享用午餐。</p>
+                <p class="timeline-time">11:40 - 18:00</p>
+                <p>逛LaLaport</p>
+				<div class="note">備註：享用午餐、晚餐與探索親子設施。</div>
             </div>
-            <div class="timeline-item">
-                <p class="timeline-time">13:30 - 17:00</p>
-                <p>繼續參觀南港展館，並在下午參加更有趣的展覽活動。</p>
-            </div>
-            <div class="timeline-item">
-                <p class="timeline-time">17:00 - 19:00</p>
-                <p>南港展覽館附近用晚餐��享受舒適的親子空間。</p>
+			<div class="timeline-item">
+                <p class="timeline-time">18:10 - 21:00</p>
+                <p>回酒店check in與休息</p>
+				<div class="note">飯店設施：健身房(11F)、商務中心(7F)。</div>
             </div>
         </div>
     </div>
 
     <!-- 第二天天行程 -->
     <div id="day2" class="content">
-        <h2 class="text-2xl font-bold text-gray-700 mb-4">第二天行程 - 8/9 (週六)</h2>
+        <h2 class="text-2xl font-bold title-text mb-4">第二天行程 - 8/9 (週日)</h2>
         <div class="timeline">
             <div class="timeline-item">
                 <p class="timeline-time">08:30 - 10:30</p>
                 <p>抵達木柵動物園，開始參觀動物園，適合小孩認識動物，園內有親子設施。</p>
-                <div class="note">備註：攜帶遮陽帽與水壺，並適時補充水分。</div>
+                <div class="note">攜帶物品：
+					<ul class="list-disc ml-6">
+						<li>遮陽帽、遮陽傘</li>
+						<li>水壺，並適時補充水分</li>
+						<li>防蚊物品</li>
+					</ul>
+				</div>
             </div>
             <div class="timeline-item">
                 <p class="timeline-time">10:30 - 12:00</p>
@@ -153,24 +258,35 @@
                 <p class="timeline-time">15:00 - 17:00</p>
                 <p>動物園後區散步，結束一天行程。</p>
             </div>
+			<div class="timeline-item">
+                <p class="timeline-time">17:00 - 18:00</p>
+                <p>回酒店休息。</p>
+            </div>
         </div>
     </div>
 
     <!-- 第三天天行程 -->
     <div id="day3" class="content">
-        <h2 class="text-2xl font-bold text-gray-700 mb-4">第三天行程 - 8/10 (週日)</h2>
+        <h2 class="text-2xl font-bold title-text mb-4">第三天行程 - 8/10 (週一)</h2>
         <div class="timeline">
             <div class="timeline-item">
-                <p class="timeline-time">09:00 - 11:00</p>
-                <p>前往華泰名品城購物及用餐，享受名品城的舒適氛圍。</p>
+                <p class="timeline-time">08:00 - 9:00</p>
+                <p>享用飯店早餐</p>
+				<div class="note">早餐時間：06:30 - 10:00</div>
             </div>
-            <div class="timeline-item">
-                <p class="timeline-time">11:00 - 13:00</p>
-                <p>購物後安排休息並在餐廳享用午餐。</p>
+			<div class="timeline-item">
+                <p class="timeline-time">09:00 - 9:30</p>
+                <p>回房間整理行李與退房</p>
+				<div class="note">備註：寄放行李於飯店,搭高鐵時再來取</div>
             </div>
-            <div class="timeline-item">
-                <p class="timeline-time">13:00 - 15:00</p>
-                <p>華泰名品城散步及愉快購物。</p>
+			<div class="timeline-item">
+                <p class="timeline-time">09:30 - 10:00</p>
+                <p>前往南港展覽館</p>
+            </div>
+             <div class="timeline-item">
+                <p class="timeline-time">10:00 - 15:30</p>
+                <p>參觀文博會</p>
+                <div class="note">企鵝波波(J1-103)、吉伊卡哇(J1-010)、JINART(J1-002)、洋蔥(J1-046)、鹿人(J1-035)、吃貨恐龍(J1-074)、姆姆(J1-148)。</div>
             </div>
             <div class="timeline-item">
                 <p class="timeline-time">15:00 - 16:30</p>
@@ -182,63 +298,118 @@
 
     <!-- 餐廳資訊 -->
     <div id="restaurants" class="content">
-        <h2 class="text-2xl font-bold text-gray-700 mb-4">🍽️ 餐廳資訊</h2>
-        <ul>
-            <li>
-                <h3 class="font-bold">南港展覽館附近餐廳</h3>
-                <p>時間：傍晚 | 位置：文博展附近</p>
-                <p>特色：舒適親子空間，提供兒童餐椅。</p>
-                <p>壽星優惠：無</p>
-            </li>
-        </ul>
+        <h2 class="text-2xl font-bold title-text mb-4">🍽️ 餐廳資訊</h2>
+		<div class="flex flex-wrap">
+			<div class="card p-4 border rounded bg-[#999B85]">
+				<p class="text-lg">名稱: 淘憩時光親子餐廳</p>
+				<p class="text-lg">位置: 台北市松江路34號，接近松江南京站</p>
+				<p class="text-lg">營業時間: 11:00 - 20:00</p>
+			</div>
+		</div>
     </div>
 
     <!-- 門票資訊 -->
     <div id="tickets" class="content">
-        <h2 class="text-2xl font-bold text-gray-700 mb-4">🎟️ 門票資訊</h2>
-        <ul>
-            <li>
-                <h3 class="font-bold">木柵動物園</h3>
-                <p>項目：動物園門票 | 價格：150元｜適合對象：全年齡</p>
-                <p>補充說明：1歲以下兒童免費。</p>
-            </li>
-        </ul>
+        <h2 class="text-2xl font-bold title-text mb-4">🎟️ 門票資訊</h2>
+		<div class="flex flex-wrap">
+            <div class="card p-4 border rounded bg-[#999B85]">
+                <p class="text-lg">名稱: 木柵動物園</p>
+				<p class="text-lg">營業時間: 09:00 - 17:30(暑假延長到21:00)</p>
+                <p class="text-lg">項目: 動物園門票 | 價格：150元｜5歲以下兒童免費。</p>
+				<div class="note">
+					<ul class="list-disc ml-6">
+						<li>寄物櫃:$40/3hr</li>
+						<li>哺乳室:遊客服務中心護理站內、非洲動物區河馬廣場旁、熱帶雨林區老虎店旁、兩棲爬蟲動物館出口處販賣站旁、溫帶區小貓熊店(萊爾富)旁、穿山甲館旁</li>
+						<li>尿布台:全園女廁</li>
+					</ul>
+				</div>
+            </div>
+            <div class="card p-4 border rounded bg-[#999B85]">
+                <p class="text-lg">名稱: LaLaport 南港</p>
+                <p class="text-lg">營業時間: 11:00 - 21:30</p>
+				<div class="note">
+					<ul class="list-disc ml-6">
+						<li>寶寶手冊換麗貝樂尿布試用包: 1F服務台兌換</li>
+						<li>南港展館門票可換100元折價券(消費滿2000元可折抵): 5F贈品處兌換</li>
+						<li>哺集乳室設置位置: B1F、2F、4F、5F、6F (各樓層均有尿布台)</li>
+					</ul>
+				</div>
+            </div>
+			<div class="card p-4 border rounded bg-[#999B85]">
+                <p class="text-lg">名稱: 台灣文博會</p>
+				<p class="text-lg">地點: 台北南港展覽館一館1樓</p>
+                <p class="text-lg">營業時間:</p>
+				<ul class="list-disc ml-6">
+                    <li>8/9(六) 10:00 - 20:00</li>
+                    <li>8/10(日) 10:00 - 18:00</li>
+                    <li>8/11(一) 10:00 - 16:00</li>
+                </ul>
+				<div class="note">二館1樓有哺集乳室</div>
+            </div>
+        </div>
     </div>
 
     <!-- 交通資訊 -->
     <div id="transportation" class="content">
-        <h2 class="text-2xl font-bold text-gray-700 mb-4">🚗 交通資訊</h2>
-        <ul>
-            <li>
-                <h3 class="font-bold">高鐵 - 高雄到台北</h3>
-                <p>出發地：高雄 | 目的地：台北</p>
-                <p>預估時間：約1.5小時</p>
-            </li>
-            <li>
-                <h3 class="font-bold">捷運 - 台北市區移動</h3>
-                <p>起訖地點：台北車站到南港展覽館 | 預估時間：20分鐘</p>
-            </li>
-        </ul>
+        <h2 class="text-2xl font-bold title-text mb-4">🚗 交通資訊</h2>
+		<div class="flex flex-wrap">
+            <div class="card p-4 border rounded bg-[#999B85]">
+				<p class="text-lg">交通工具: 高鐵去程</p>
+				<p class="text-lg">起訖地點: 左營到南港</p>
+                <p class="text-lg">上下車時間: 08:55 - 10:40 (1小時45分鐘)</p>
+				<p class="text-lg">座位資訊: 5車 16E & 16D</p>
+                <div class="note">備註：列車上於第5車設置哺乳室,如需使用,請聯絡列車組員；各車站則有完整設備的哺集乳室可使用</div>
+            </div>
+			<div class="card p-4 border rounded bg-[#999B85]">
+				<p class="text-lg">交通工具: 高鐵回程</p>
+				<p class="text-lg">起訖地點: 南港到左營</p>
+                <p class="text-lg">上下車時間: 16:00 - 18:05 (1小時45分鐘)</p>
+				<p class="text-lg">座位資訊: 5車11E & 11D</p>
+                <div class="note">備註：列車上於第5車設置哺乳室,如需使用,請聯絡列車組員；各車站則有完整設備的哺集乳室可使用</div>
+            </div>
+        </div>
     </div>
 
     <!-- 住宿資訊 -->
     <div id="accommodation" class="content">
-        <h2 class="text-2xl font-bold text-gray-700 mb-4">🏨 住宿資訊</h2>
-        <ul>
-            <li>
-                <h3 class="font-bold">第一晚 - 台北親子友善飯店</h3>
-                <p>位置：台北市信義區</p>
-                <p>入住時間：15:00開始</p>
-                <p>親子服務：提供嬰兒浴盆、兒童遊戲室及床圍。</p>
-            </li>
-            <li>
-                <h3 class="font-bold">第二晚 - 台北市區家庭飯店</h3>
-                <p>位置：台北市大安區</p>
-                <p>入住時間：15:00開始</p>
-                <p>親子服務：有消毒鍋及哺乳室，且提供兒童安全座椅。</p>
-            </li>
-        </ul>
+        <h2 class="text-2xl font-bold title-text mb-4">🏨 住宿資訊</h2>
+		<div class="flex flex-wrap">
+            <div class="card p-4 border rounded bg-[#999B85]">
+                <p class="text-lg">名稱: 台北六福萬怡酒店</p>
+				<p class="text-lg">位置: 台北市松山區民生東路158號</p>
+				<p class="text-lg">入住時間: 15:00</p>
+                <p class="text-lg">服務項目: 提供嬰兒浴盆</p>
+            </div>
+        </div>
     </div>
-
+	
+	<!-- 攜帶物品 -->
+	<div id="checklist" class="content">
+        <h2 class="text-2xl font-bold title-text mb-4">🧳 攜帶物品清單</h2>
+		<div class="add-item">
+		  <input id="new-item-input" type="text" placeholder="新增物品...">
+		  <button onclick="addItem()">➕ 新增</button>
+		</div>
+		<div id="unchecked-items" class="checklist-section">
+		  <h3>未勾選項目</h3>
+		  <ul>
+			<li id="item1" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item1')">尿布</li>
+			<li id="item2" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item2')">濕紙巾</li>
+			<li id="item3" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item3')">奶瓶</li>
+			<li id="item4" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item4')">奶粉或母乳儲存袋</li>
+			<li id="item5" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item5')">嬰兒衣物</li>
+			<li id="item6" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item6')">嬰兒護膚品</li>
+			<li id="item7" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item7')">嬰兒推車</li>
+			<li id="item8" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item8')">寶寶背帶或揹巾</li>
+			<li id="item9" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item9')">玩具與安撫物品</li>
+			<li id="item10" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item10')">急救包</li>
+			<li id="item11" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item11')">旅行洗衣袋</li>
+		  </ul>
+		</div>
+		<div id="checked-items" class="checklist-section">
+		  <h3>已勾選項目</h3>
+		  <ul></ul>
+		</div>
+    </div>
 </body>
 </html>
