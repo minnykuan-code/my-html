@@ -89,16 +89,18 @@
         }
 		input[type="checkbox"] {
 		  margin-right: 10px;
+		  accent-color: #ad8a68;
 		}
 		#unchecked-items, #checked-items {
-		  border: 1px solid #d2a679;
+		  border: 1px solid #DDD6D6;
 		  border-radius: 5px;
 		  padding: 10px;
 		  margin-top: 10px;
-		  background-color: #fdf9f3;
 		}
 		#unchecked-items h3, #checked-items h3 {
-		  color: #8B5A2B;
+		  color: #94a97a;
+		  font-weight: 600;
+		  padding: 5px 0 10px 0;
 		}
 		.add-item {
 		  margin-top: 20px;
@@ -108,13 +110,14 @@
 		}
 		.add-item input[type="text"] {
 		  padding: 5px;
-		  border: 1px solid #d2a679;
+		  border: 1px solid #DDD6D6;
 		  border-radius: 5px;
 		  flex-grow: 1;
+		  color: #706d6a;
 		}
 		.add-item button {
 		  padding: 5px 10px;
-		  background-color: #d2a679;
+		  background-color: #8b7766;
 		  border: none;
 		  border-radius: 5px;
 		  color: white;
@@ -126,6 +129,11 @@
 		.checklist-item {
 		  display: flex;
 		  align-items: center;
+		  margin: 10px;
+		  color: #706d6a;
+		}
+		.checklist-section {
+		  margin-top: 20px;
 		}
     </style>
     <script>
@@ -388,7 +396,7 @@
         <h2 class="text-2xl font-bold title-text mb-4">🧳 攜帶物品清單</h2>
 		<div class="add-item">
 		  <input id="new-item-input" type="text" placeholder="新增物品...">
-		  <button onclick="addItem()">➕ 新增</button>
+		  <button onclick="addItem()">＋ 新增</button>
 		</div>
 		<div id="unchecked-items" class="checklist-section">
 		  <h3>未勾選項目</h3>
