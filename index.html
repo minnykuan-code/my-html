@@ -30,6 +30,15 @@
             color: #766857; /* 深咖啡文字 */
             font-weight: 500;
         }
+		.important-note {
+            background-color: #EFD9C4;
+			color: #766857;
+			margin-top: 8px;
+			padding: 20px;
+			border-radius: 4px;
+			border: 2px solid #d5b9c5;
+			font-weight: 600;
+        }
         .tab-button {
             background-color: #d7ccc8; /* 大地色系 */
             color: #4e342e;
@@ -219,7 +228,7 @@
         <button class="tab-button" onclick="switchTab('tickets')">景點資訊</button>
         <button class="tab-button" onclick="switchTab('transportation')">交通資訊</button>
         <button class="tab-button" onclick="switchTab('accommodation')">住宿資訊</button>
-		<button class="tab-button" onclick="switchTab('checklist')">攜帶物品清單</button>
+		<button class="tab-button" onclick="switchTab('checklist')">寶寶攜帶物品清單</button>
     </nav>
 
     <!-- 第一天天行程 -->
@@ -257,10 +266,13 @@
                 <p class="timeline-time">18:10</p>
                 <p>回飯店check in與休息</p>
 				<div class="note">
-				<p>飯店設施：健身房(11F)、商務中心(7F)。</p>
-				<p>有餘力再去文博(到20:00)</p>
+					<p>飯店設施：健身房(11F)、商務中心(7F)。</p>
+					<p>有餘力再去文博(到20:00)</p>
 				</div>
             </div>
+			<div class="important-note">
+				<p>⚠️ 將行動電源與風扇充飽電 並 事先準備好去動物園的物品</p>
+			</div>
         </div>
     </div>
 
@@ -273,12 +285,14 @@
                 <p>吃早餐 與 整理物品</p>
 				<div class="note">攜帶物品：
 					<ul class="list-disc ml-6">
+						<li>尿布*10</li>
 						<li>奶粉、奶瓶、巧烘包、</li>
 						<li>保溫瓶(70的水)</li>
-						<li>遮陽帽、遮陽傘</li>
 						<li>水壺，並適時補充水分</li>
 						<li>湯匙、餅乾和常溫副食品</li>
+						<li>遮陽帽、遮陽傘、防曬乳</li>
 						<li>!!防蚊物品!!</li>
+						<li>背帶</li>
 						<li>醫藥物品</li>
 					</ul>
 				</div>
@@ -288,18 +302,18 @@
                 <p>前往木柵動物園</p>
             </div>
             <div class="timeline-item">
-                <p class="timeline-time">09:00 - 10:30</p>
-                <p>抵達木柵動物園，開始參觀動物園，適合小孩認識動物，園內有親子設施。</p>
+                <p class="timeline-time">09:00 - 10:00</p>
+                <p>抵達木柵動物園，可先到門口的7-11購買備品</p>
             </div>
             <div class="timeline-item">
-                <p class="timeline-time">10:30 - 12:00</p>
+                <p class="timeline-time">10:00 - 11:00</p>
                 <p>企鵝館及溫帶動物區</p>
 				<div class="note">
 					備註：建議直接搭小火車前往企鵝館,由上往下逛
 				</div>
             </div>
             <div class="timeline-item">
-                <p class="timeline-time">12:00 - 13:30</p>
+                <p class="timeline-time">11:00 - 13:30</p>
                 <p>兩棲爬蟲動物館、用餐與休憩。</p>
 				<div class="note">企鵝館旁的兩棲爬蟲動物館出口處有哺乳室</div>
             </div>
@@ -582,7 +596,7 @@
 	
 	<!-- 攜帶物品 -->
 	<div id="checklist" class="content">
-        <h2 class="text-2xl font-bold title-text mb-4">🧳 攜帶物品清單</h2>
+        <h2 class="text-2xl font-bold title-text mb-4">🧳 寶寶攜帶物品清單</h2>
 		<div class="add-item">
 		  <input id="new-item-input" type="text" placeholder="新增物品...">
 		  <button onclick="addItem()">＋ 新增</button>
@@ -592,19 +606,20 @@
 		  <ul>
 			<li id="item1" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item1')">尿布*30</li>
 			<li id="item2" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item2')">奶粉1罐+分裝罐/袋</li>
-			<li id="item12" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item2')">奶瓶2支</li>
-			<li id="item13" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item2')">巧烘包</li>
-			<li id="item13" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item2')">保溫瓶</li>
-			<li id="item3" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item3')">濕紙巾</li>
-			<li id="item4" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item4')">嬰兒衣物/外套/帽子/口水巾</li>
-			<li id="item5" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item5')">泡泡露/乳液/護膚</li>
-			<li id="item6" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item6')">浴巾/被被/小毛巾/紗布被</li>
-			<li id="item7" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item7')">Konny嬰兒背帶</li>
-			<li id="item8" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item8')">玩具/固齒器/牙刷</li>
-			<li id="item9" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item9')">餅乾/副食品/碗/湯匙</li>
-			<li id="item10" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item10')">水壺/水杯</li>
-			<li id="item11" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item11')">寶寶手冊/健保卡</li>
-			<li id="item11" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item11')">醫藥箱/備藥/喝藥的奶瓶/體溫計</li>
+			<li id="item3" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item2')">奶瓶2支</li>
+			<li id="item4" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item2')">巧烘包</li>
+			<li id="item5" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item2')">保溫瓶</li>
+			<li id="item6" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item3')">濕紙巾</li>
+			<li id="item7" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item4')">嬰兒衣物/外套/帽子/口水巾</li>
+			<li id="item8" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item5')">泡泡露/乳液/護膚/防曬乳/棉花棒</li>
+			<li id="item9" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item6')">浴巾/被被/小毛巾/紗布被</li>
+			<li id="item10" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item7')">Konny嬰兒背帶</li>
+			<li id="item11" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item8')">玩具/固齒器/牙刷</li>
+			<li id="item12" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item9')">餅乾/副食品/碗/湯匙</li>
+			<li id="item13" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item10')">水壺/水杯</li>
+			<li id="item14" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item11')">寶寶手冊/健保卡</li>
+			<li id="item15" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item11')">醫藥箱/備藥/喝藥的奶瓶/體溫計</li>
+			<li id="item16" class="checklist-item"><input type="checkbox" onchange="toggleCheck('item11')">推車/風扇/充電線</li>
 		  </ul>
 		</div>
 		<div id="checked-items" class="checklist-section">
